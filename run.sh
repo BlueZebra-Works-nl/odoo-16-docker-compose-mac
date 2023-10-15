@@ -12,9 +12,11 @@ sudo chmod -R 777 $DESTINATION
 sudo kmutil load -n -d $DESTINATION
 # config
 if grep -qF "fs.inotify.max_user_watches" /etc/sysctl.conf; then echo $(grep -F "fs.inotify.max_user_watches" /etc/sysctl.conf); else echo "fs.inotify.max_user_watches = 524288" | sudo tee -a /etc/sysctl.conf; fi
-sed -i '' 's#10016#'$PORT'#g' $DESTINATION/docker-compose.yml
-sed -i '' 's#20016#'$CHAT'#g' $DESTINATION/docker-compose.yml
+
+echo 'replace ports in docker-compose.yml to run multiple instances.'
+# sed -i '' 's#10016#'$PORT'#g' $DESTINATION/docker-compose.yml
+# sed -i '' 's#20016#'$CHAT'#g' $DESTINATION/docker-compose.yml
 # run Odoo
-docker-compose -f $DESTINATION/docker-compose.yml up -d
+echo 'docker-compose -f $DESTINATION/docker-compose.yml up -d'
 
 echo 'Started Odoo @ http://localhost:'$PORT' | Master Password: minhng.info | Live chat port: '$CHAT
